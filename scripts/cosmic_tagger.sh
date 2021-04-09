@@ -1,10 +1,10 @@
 #!/bin/bash
 #COBALT -n 128 -A datascience -t 3:00:00 -q default --jobname=dlio_candel --attrs mcdram=cache:numa=quad
 
-source /soft/datascience/tensorflow/tf2.2-craympi.sh
 export MPICH_MAX_THREAD_SAFETY=multiple
 CURRENT_DIR=`pwd`
 DLIO_ROOT=`dirname $CURRENT_DIR`
+source ./setup_tf2.3.sh
 export PYTHONPATH=$DLIO_ROOT:$PYTHONPATH
 
 NNODES=$COBALT_JOBSIZE
@@ -19,7 +19,7 @@ DARSHAN_PRELOAD=/soft/perftools/darshan/darshan-3.1.8/lib/libdarshan.so
 
 DATA_DIR=/projects/datascience/dhari/stimulus/evaluation/ct
 
-OPTS=(-f hdf5_opt -fa shared -nf 1 -sf 6000 -rl 40960 -bs 1 -ec 1 -cs 4096 -tr 4 -tc 4 -rp 1 -ps 147456000 -ts 4194304 -df ${DATA_DIR} -gd 0 -k 1)
+OPTS=(-f hdf5_opt -fa shared -nf 1 -sf 384000 -rl 40960 -bs 1 -ec 1 -cs 4096 -tr 4 -tc 4 -rp 1 -ps 147456000 -ts 4194304 -df ${DATA_DIR} -gd 0 -k 1)
 
 echo "aprun -n $NRANKS -N $RANKS_PER_NODE -j $THREADS_PER_CORE -cc depth -e OMP_NUM_THREADS=$PROCESS_DISTANCE -d $PROCESS_DISTANCE ${OPTS[@]}"
 

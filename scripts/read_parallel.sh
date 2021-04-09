@@ -1,10 +1,10 @@
 #!/bin/bash
 #COBALT -n 128 -A datascience -t 3:00:00 -q default --jobname=dlio_candel --attrs mcdram=cache:numa=quad
 
-source /soft/datascience/tensorflow/tf2.2-craympi.sh
 export MPICH_MAX_THREAD_SAFETY=multiple
 CURRENT_DIR=`pwd`
 DLIO_ROOT=`dirname $CURRENT_DIR`
+source ./setup_tf2.3.sh
 export PYTHONPATH=$DLIO_ROOT:$PYTHONPATH
 
 NNODES=$COBALT_JOBSIZE
